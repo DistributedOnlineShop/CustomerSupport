@@ -12,10 +12,10 @@ import (
 type CustomerSupport struct {
 	CsID      uuid.UUID        `json:"cs_id"`
 	UserID    uuid.UUID        `json:"user_id"`
-	OrderID   pgtype.UUID      `json:"order_id"`
+	OrderID   uuid.UUID        `json:"order_id"`
 	Subject   pgtype.Text      `json:"subject"`
 	Message   pgtype.Text      `json:"message"`
 	Status    string           `json:"status"`
-	CreatedAt pgtype.TIMESTAMP(0) `json:"created_at"`
-	UpdatedAt pgtype.TIMESTAMP(0) `json:"updated_at"`
+	CreatedAt pgtype.Timestamp `json:"created_at"`
+	UpdatedAt pgtype.Timestamp `json:"updated_at"`
 }

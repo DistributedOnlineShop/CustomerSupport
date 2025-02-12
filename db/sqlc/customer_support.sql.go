@@ -14,6 +14,7 @@ import (
 
 const createCustomerSupportCase = `-- name: CreateCustomerSupportCase :one
 INSERT INTO customer_support (
+    CS_ID,
     USER_ID,
     ORDER_ID,
     SUBJECT,
@@ -24,13 +25,15 @@ INSERT INTO customer_support (
     $2,
     $3,
     $4,
-    $5
+    $5,
+    $6
 ) RETURNING cs_id, user_id, order_id, subject, message, status, created_at, updated_at
 `
 
 type CreateCustomerSupportCaseParams struct {
+	CsID    uuid.UUID   `json:"cs_id"`
 	UserID  uuid.UUID   `json:"user_id"`
-	OrderID pgtype.UUID `json:"order_id"`
+	OrderID uuid.UUID   `json:"order_id"`
 	Subject pgtype.Text `json:"subject"`
 	Message pgtype.Text `json:"message"`
 	Status  string      `json:"status"`
@@ -38,6 +41,7 @@ type CreateCustomerSupportCaseParams struct {
 
 func (q *Queries) CreateCustomerSupportCase(ctx context.Context, arg CreateCustomerSupportCaseParams) (CustomerSupport, error) {
 	row := q.db.QueryRow(ctx, createCustomerSupportCase,
+		arg.CsID,
 		arg.UserID,
 		arg.OrderID,
 		arg.Subject,
@@ -58,15 +62,15 @@ func (q *Queries) CreateCustomerSupportCase(ctx context.Context, arg CreateCusto
 	return i, err
 }
 
-const getCustomerSupportCase = `-- name: GetCustomerSupportCase :one
+const getCustomerSupportCaseById = `-- name: GetCustomerSupportCaseById :one
 SELECT 
     cs_id, user_id, order_id, subject, message, status, created_at, updated_at 
 FROM customer_support 
 WHERE CS_ID = $1
 `
 
-func (q *Queries) GetCustomerSupportCase(ctx context.Context, csID uuid.UUID) (CustomerSupport, error) {
-	row := q.db.QueryRow(ctx, getCustomerSupportCase, csID)
+func (q *Queries) GetCustomerSupportCaseById(ctx context.Context, csID uuid.UUID) (CustomerSupport, error) {
+	row := q.db.QueryRow(ctx, getCustomerSupportCaseById, csID)
 	var i CustomerSupport
 	err := row.Scan(
 		&i.CsID,

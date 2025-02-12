@@ -12,7 +12,7 @@ import (
 
 type Querier interface {
 	CreateCustomerSupportCase(ctx context.Context, arg CreateCustomerSupportCaseParams) (CustomerSupport, error)
-	GetCustomerSupportCase(ctx context.Context, csID uuid.UUID) (CustomerSupport, error)
+	GetCustomerSupportCaseById(ctx context.Context, csID uuid.UUID) (CustomerSupport, error)
 	GetCustomerSupportCaseList(ctx context.Context) ([]CustomerSupport, error)
 	UpdateCustomerSupportCaseStatus(ctx context.Context, arg UpdateCustomerSupportCaseStatusParams) (CustomerSupport, error)
 }

@@ -1,5 +1,6 @@
 -- name: CreateCustomerSupportCase :one
 INSERT INTO customer_support (
+    CS_ID,
     USER_ID,
     ORDER_ID,
     SUBJECT,
@@ -10,7 +11,8 @@ INSERT INTO customer_support (
     $2,
     $3,
     $4,
-    $5
+    $5,
+    $6
 ) RETURNING *;
 
 -- name: GetCustomerSupportCaseList :many
@@ -18,7 +20,7 @@ SELECT
     * 
 FROM customer_support;
 
--- name: GetCustomerSupportCase :one
+-- name: GetCustomerSupportCaseById :one
 SELECT 
     * 
 FROM customer_support 
