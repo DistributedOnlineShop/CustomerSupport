@@ -16,9 +16,9 @@ func CreateRandomCustomerSupportCase(t *testing.T) CustomerSupport {
 		CsID:    util.CreateUUID(),
 		UserID:  util.CreateUUID(),
 		OrderID: util.CreateUUID(),
-		Subject: util.GenerateRandomSubject(),
-		Message: util.GenerateRandomMessage(),
-		Status:  util.GenerateRandomSupportCaseType(),
+		Subject: util.GenerateSubject(),
+		Message: util.GenerateMessage(),
+		Status:  util.GenerateSupportCaseType(),
 	}
 
 	SupportCase, err := testStore.CreateCustomerSupportCase(context.Background(), data)
@@ -60,19 +60,19 @@ func TestGetCustomerSupportCaseList(t *testing.T) {
 func TestUpdateCustomerSupportCaseStatus(t *testing.T) {
 	data := CreateRandomCustomerSupportCase(t)
 
-	newStatus := util.GenerateRandomSupportCaseType()
+	newStatus := util.GenerateSupportCaseType()
 	if newStatus == data.Status {
 		for {
-			newStatus = util.GenerateRandomSupportCaseType()
+			newStatus = util.GenerateSupportCaseType()
 			if newStatus != data.Status {
 				break
 			}
 		}
 	}
-	newMessage := util.GenerateRandomSupportCaseType()
+	newMessage := util.GenerateSupportCaseType()
 	if newMessage == data.Message.String {
 		for {
-			newMessage = util.GenerateRandomSupportCaseType()
+			newMessage = util.GenerateSupportCaseType()
 			if newMessage != data.Message.String {
 				break
 			}

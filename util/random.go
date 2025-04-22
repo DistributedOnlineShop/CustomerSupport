@@ -9,7 +9,7 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
-func GenerateRandomSupportCaseType() string {
+func GenerateSupportCaseType() string {
 	caseTypes := []string{
 		"Technical Issue",
 		"Billing Inquiry",
@@ -17,25 +17,25 @@ func GenerateRandomSupportCaseType() string {
 		"Feature Request",
 		"Bug Report",
 		"Product Inquiry",
-		"General Inquiry",
+		"Generate Inquiry",
 	}
 	return caseTypes[rand.IntN(len(caseTypes))]
 }
 
-func GenerateRandomSubject() pgtype.Text {
+func GenerateSubject() pgtype.Text {
 	return pgtype.Text{
 		String: gofakeit.BookTitle(),
 		Valid:  true,
 	}
 }
-func GenerateRandomMessage() pgtype.Text {
+func GenerateMessage() pgtype.Text {
 	return pgtype.Text{
 		String: gofakeit.BookGenre(),
 		Valid:  true,
 	}
 }
 
-func GenerateRandomDate() pgtype.Timestamp {
+func GenerateDate() pgtype.Timestamp {
 	daysOffset := rand.IntN(365) - 180
 	return pgtype.Timestamp{
 		Time:  time.Now().Add(time.Duration(daysOffset) * 24 * time.Hour),
@@ -43,7 +43,7 @@ func GenerateRandomDate() pgtype.Timestamp {
 	}
 }
 
-func GenerateRandomNumeric() pgtype.Numeric {
+func GenerateNumeric() pgtype.Numeric {
 	intPart := rand.IntN(100000)
 	fracPart := rand.IntN(100)
 	value := int64(intPart) + int64(fracPart)/100.0
